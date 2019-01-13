@@ -60,7 +60,7 @@ module.exports = {
   },
   plugins: [
     new ChromeExtensionReloader(),
-    new CleanWebpackPlugin(['build']),
+    new CleanWebpackPlugin(['dist']),
     new CopyWebpackPlugin([
       { from: path.resolve(__dirname, 'src', 'manifest.json'), flatten: true },
       { from: path.resolve(__dirname, 'src', 'img'), to: 'img' },
