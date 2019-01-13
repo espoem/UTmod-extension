@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>UTmod</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="nav">
+        <span class="h1">Final score</span>
+        <span class="h1" id="score">100</span>
+      </div>
+
+      <div class="container-body">
+        <div class="category">
+          <div class="category__label">Category</div>
+          <select
+            name="category_select"
+            id="category-select"
+            class="category__select"
+          ></select>
+        </div>
+
+        <ul id="accordion">
+          <li>
+            <input
+              type="checkbox"
+              id="accordion-questionnaire"
+              hidden="hidden"
+            /><label class="h2" for="accordion-questionnaire"
+              >Questionnaire <span class="bar"></span>
+              <span class="bar bar--vertical"></span>
+            </label>
+            <ul id="questions"></ul>
+          </li>
+          <li>
+            <input
+              type="checkbox"
+              id="accordion-review-comment"
+              hidden="hidden"
+            /><label class="h2" for="accordion-review-comment"
+              >Review Comment <span class="bar"></span>
+              <span class="bar bar--vertical"></span>
+            </label>
+            <div>
+              <textarea
+                id="review-comment"
+                minlength="60"
+                placeholder="Write your review comment"
+              ></textarea>
+            </div>
+          </li>
+        </ul>
+
+        <div class="buttons">
+          <a id="reset" href="#" type="button" class="btn">Reset</a
+          ><a id="copy" href="#" type="button" class="btn btn--primary"
+            >Copy comment</a
+          >
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

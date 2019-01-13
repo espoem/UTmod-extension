@@ -1,0 +1,12 @@
+{
+  "manifest_version": 2,
+  "name": "UTmod - Utopian reviews made easier",
+  "version": "0.0.1",
+
+  "description": "Extension to collect tools for Utopian reviewers to one place.",
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_title": "UTmod"
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}
