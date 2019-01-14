@@ -147,7 +147,7 @@ function calculateScore() {
   const sliders = document.querySelectorAll('#questions input[type=range]');
   let score = 100;
   for (const s of sliders) {
-    score *= s.value;
+    score *= Math.pow(s.value, 1.2);
   }
   return score;
 }
