@@ -85,14 +85,18 @@ function generateQuestions(parentNode) {
     }
     qItem.appendChild(qSelect);
 
+    const qSliderWrapper = document.createElement('div');
+    qSliderWrapper.classList.add('range');
     const qSlider = document.createElement('input');
     qSlider.setAttribute('type', 'range');
     qSlider.setAttribute('min', ansSorted[ansSorted.length - 1].weight);
     qSlider.setAttribute('max', ansSorted[0].weight);
-    qSlider.setAttribute('step', 0.01);
+    qSlider.setAttribute('step', 0.001);
     qSlider.value = ansSorted[0].weight;
     qSlider.setAttribute('value', ansSorted[0].weight);
-    qItem.appendChild(qSlider);
+
+    qSliderWrapper.appendChild(qSlider);
+    qItem.appendChild(qSliderWrapper);
     qSelect.addEventListener('input', () => {
       qSlider.value = qSelect.options[qSelect.selectedIndex].value;
 
