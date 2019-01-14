@@ -138,13 +138,18 @@ function generateCategoriesOptions(parentNode) {
 }
 
 function updateScore() {
+  const score = calculateScore();
+  const scoreNode = document.querySelector('#score');
+  scoreNode.innerText = Math.max(Math.min(Math.round(score), 100), 0);
+}
+
+function calculateScore() {
   const sliders = document.querySelectorAll('#questions input[type=range]');
   let score = 100;
   for (const s of sliders) {
     score *= s.value;
   }
-  const scoreNode = document.querySelector('#score');
-  scoreNode.innerText = Math.max(Math.min(Math.round(score), 100), 0);
+  return score;
 }
 
 function getModeratorSignature() {
