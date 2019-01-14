@@ -15,7 +15,7 @@ window.addEventListener('DOMContentLoaded', () => {
     scoreNode.innerText = 100;
   });
 
-  const accordionInputs = document.querySelectorAll('#accordion input[type=checkbox]');
+  const accordionInputs = document.querySelectorAll('.accordion input[type=checkbox]');
   for (const i of accordionInputs) {
     const label = i.nextSibling;
     i.addEventListener('input', () => label.classList.toggle('is-active'));
