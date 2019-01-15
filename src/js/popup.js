@@ -1,6 +1,7 @@
 import '../sass/main.scss';
 
 import { categories, questions } from './constants';
+import Checkbox from './checkbox';
 
 window.addEventListener('DOMContentLoaded', () => {
   const catSelect = document.querySelector('#category-select');
@@ -15,7 +16,8 @@ window.addEventListener('DOMContentLoaded', () => {
     scoreNode.innerText = 100;
   });
 
-  const accordionInputs = document.querySelectorAll('.accordion input[type=checkbox]');
+  // toggle accordion items
+  const accordionInputs = document.querySelectorAll('.accordion__item > input[type=checkbox]');
   for (const i of accordionInputs) {
     const label = i.nextSibling;
     i.addEventListener('input', () => label.classList.toggle('is-active'));
@@ -84,6 +86,13 @@ function generateQuestions(parentNode) {
       qSelect.appendChild(ans);
     }
     qItem.appendChild(qSelect);
+
+    const checkbox = new Checkbox(`question-${+idx + 1}-checkbox-advanced`, 'Advanced');
+    qItem.appendChild(checkbox.body);
+    const checkboxHandle = checkbox.body.querySelector('input');
+    checkboxHandle.addEventListener('input', () => {
+      checkbox.body.classList.toggle('is-active');
+    });
 
     const qSliderWrapper = document.createElement('div');
     qSliderWrapper.classList.add('range');

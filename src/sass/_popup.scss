@@ -124,3 +124,30 @@ select {
     color: $color-white;
   }
 }
+
+// checkbox style
+.checkbox_wrapper {
+  margin-top: 1.5rem;
+}
+
+.checkbox_label {
+  font-weight: 300;
+  font-size: 1.2rem;
+}
+
+div[id$='-checkbox-advanced'] {
+  & + .range {
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+    opacity: 0;
+  }
+
+  &.is-active + .range {
+    max-height: 10rem;
+    overflow: visible;
+    margin-top: 1.8rem;
+    margin-bottom: 1.2rem;
+    opacity: 1;
+  }
+}
