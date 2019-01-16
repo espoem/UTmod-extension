@@ -89,10 +89,6 @@ function generateQuestions(parentNode) {
 
     const checkbox = new Checkbox(`question-${+idx + 1}-checkbox-advanced`, 'Advanced');
     qItem.appendChild(checkbox.body);
-    const checkboxHandle = checkbox.body.querySelector('input');
-    checkboxHandle.addEventListener('input', () => {
-      checkbox.body.classList.toggle('is-active');
-    });
 
     const qSliderWrapper = document.createElement('div');
     qSliderWrapper.classList.add('range');
@@ -130,6 +126,15 @@ function generateQuestions(parentNode) {
         }
       }
       qSelect.selectedIndex = idx;
+    });
+
+    const checkboxHandle = checkbox.body.querySelector('input');
+    checkboxHandle.addEventListener('input', () => {
+      checkbox.body.classList.toggle('is-active');
+      if (!checkboxHandle.checked) {
+        qSlider.value = qSelect.options[qSelect.selectedIndex].value;
+        updateScore();
+      }
     });
 
     questionsNode.appendChild(qItem);
