@@ -247,6 +247,9 @@ function getQuestionnaireResult() {
     const comment = q.parentNode.querySelector('textarea').value;
 
     let ans = `- Answer: ${answer}\n- Factor: ${weight}`;
+    if (slider.value !== select.options[select.selectedIndex].value) {
+      ans += ` (orig. ${select.options[select.selectedIndex].value})`;
+    }
 
     if (comment && comment.trim().length > 0) {
       ans += `\n- Additional comment: ${comment.trim()}`;
