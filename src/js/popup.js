@@ -35,9 +35,16 @@ window.addEventListener('DOMContentLoaded', () => {
   // reset review
   const resetBtn = document.querySelector('#reset');
   resetBtn.addEventListener('click', () => {
+    // reset questions
     generateQuestions(catSelect);
+
+    // reset review comment
     const reviewText = document.querySelector('#review-comment');
     reviewText.value = '';
+
+    // enable copy review button
+    const reviewBtn = document.querySelector('#copy-review');
+    reviewBtn.classList.remove('btn--disabled');
   });
 
   // copy button to clipboard
@@ -180,11 +187,11 @@ function generateQuestions(parentNode) {
       && !(qSliderComment.value.length > 20)
     ) {
       qSliderComment.classList.add('error');
-      reviewBtn.classList.add('btn--disabled')
+      reviewBtn.classList.add('btn--disabled');
       reviewBtn.disabled = true;
     } else {
       qSliderComment.classList.remove('error');
-      reviewBtn.classList.remove('btn--disabled')
+      reviewBtn.classList.remove('btn--disabled');
       reviewBtn.disabled = false;
     }
   }
