@@ -176,11 +176,6 @@ function generateQuestions(parentNode) {
   }
 
   function checkCommentOnSliderChange(qSelect, qSlider, qSliderComment) {
-    // console.log(
-    //   qSelect.options[qSelect.selectedIndex].value,
-    //   qSlider.value,
-    //   qSliderComment.value.length,
-    // );
     const reviewBtn = document.querySelector('#copy-review');
     if (
       qSelect.options[qSelect.selectedIndex].value != qSlider.value
