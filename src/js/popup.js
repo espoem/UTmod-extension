@@ -180,7 +180,7 @@ function generateQuestions(parentNode) {
   function checkCommentOnSliderChange(qSelect, qSlider, qSliderComment) {
     const reviewBtn = document.querySelector('#copy-review');
     if (
-      qSelect.options[qSelect.selectedIndex].value != qSlider.value
+      qSelect.options[qSelect.selectedIndex].value !== qSlider.value
       && !(qSliderComment.value.length > 20)
     ) {
       qSliderComment.classList.add('error');
