@@ -167,6 +167,7 @@ function generateQuestions(parentNode) {
       checkbox.body.classList.toggle('is-active');
       if (!checkboxHandle.checked) {
         qSlider.value = qSelect.options[qSelect.selectedIndex].value;
+        qSliderComment.value = '';
         updateScore();
       }
       checkCommentOnSliderChange(qSelect, qSlider, qSliderComment);
