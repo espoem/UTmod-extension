@@ -39,7 +39,7 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   // copy button to clipboard
-  const previewBtn = document.querySelector('#copy');
+  const previewBtn = document.querySelector('#copy-review');
   previewBtn.addEventListener('click', () => {
     const dummy = document.createElement('textarea');
     dummy.value = getReviewCommentBody();
