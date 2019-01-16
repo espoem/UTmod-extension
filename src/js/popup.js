@@ -86,6 +86,7 @@ function generateQuestions(parentNode) {
     const qItem = document.createElement('li');
     qItem.classList.add('questions__item');
     const qText = document.createElement('div');
+    qText.id = `question-${+idx + 1}-text`;
     qText.classList.add('question__text');
     const q = questions[currentCategory][idx];
     qText.innerText = `Q${+idx + 1}: ${q.question}`;
@@ -228,6 +229,39 @@ function getParWithGuidelinesLink(category) {
   return `Your contribution has been evaluated according to [Utopian policies and guidelines](https://join.utopian.io/guidelines), as well as a predefined set of questions relevant to the category.\n\nTo view those questions and the relevant answers related to your post, [click here](https://review.utopian.io/result/${category}/${getAnswersLinkPart()}).`;
 }
 
+function getQuestionnaireResult() {
+  const questions = document.querySelectorAll('.questions__item > .question__text');
+  const parts = [
+    '***Results of the questionnaire used to evaluate this contribution are included below.***',
+  ];
+  const weights = [];
+  for (const q of questions) {
+    const part = [];
+    part.push(q.innerHTML);
+    const select = q.parentNode.querySelector('select');
+    const answer = select.options[select.selectedIndex].innerText;
+    const slider = q.parentNode.querySelector('div.range > input[type=range]');
+    const weight = slider.value;
+    weights.push(+weight);
+    const comment = q.parentNode.querySelector('textarea').value;
+
+    let ans = `- Answer: ${answer}\n- Factor: ${weight}`;
+
+    if (comment && comment.trim().length > 0) {
+      ans += `\n- Additional comment: ${comment.trim()}`;
+    }
+
+    part.push(ans);
+    parts.push(part.join('\n\n'));
+  }
+
+  const scoreNode = document.querySelector('#score');
+  parts.push(`**Final score: ${scoreNode.innerText}/100**`);
+  parts.push(`Score calculation: ${[100, ...weights].join(' * ')} ≈ ${scoreNode.innerText}`);
+
+  return parts.join('\n\n');
+}
+
 function getAnswersLinkPart() {
   const selects = document.querySelectorAll('select[id^=question-][id$=-select]');
   const ansIdx = [];
@@ -249,7 +283,12 @@ function getReviewCommentBody() {
     }
   }
 
-  let parts = [getParWithGuidelinesLink(cIdx), getParWithDiscordLink(), getModeratorSignature()];
+  let parts = [
+    // getParWithGuidelinesLink(cIdx),
+    getQuestionnaireResult(),
+    getParWithDiscordLink(),
+    getModeratorSignature(),
+  ];
 
   if (comment.value.length > 0) {
     parts = [comment.value, ...parts];
