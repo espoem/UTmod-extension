@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
-  mode: 'production',
+  devtool: 'source-map',
   entry: {
     popup: path.resolve(__dirname, 'src', 'js', 'popup.js'),
     background: path.resolve(__dirname, 'src', 'js', 'background.js'),

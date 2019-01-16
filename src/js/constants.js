@@ -122,7 +122,7 @@ export const questions = {
         {
           answer:
             'This contribution adds nearly no value to the open source community and ecosystem or the specific project.',
-          weight: 0.3,
+          weight: 0.2,
         },
       ],
     },
@@ -204,7 +204,7 @@ export const questions = {
         },
         {
           answer: 'A single instance of graphic or video content was included.',
-          weight: 0.94,
+          weight: 0.96,
         },
         {
           answer: 'No graphic or video content was included or the content was irrelevant.',
@@ -225,11 +225,11 @@ export const questions = {
         },
         {
           answer: 'Most of the blog post contains information gathered from other sources.',
-          weight: 0.9,
+          weight: 0.8,
         },
         {
           answer: 'The author knows only little or nothing about the project.',
-          weight: 0.4,
+          weight: 0.3,
         },
       ],
     },
@@ -249,11 +249,11 @@ export const questions = {
         },
         {
           answer: 'Comparison with similar projects is included.',
-          weight: 0.95,
+          weight: 0.96,
         },
         {
           answer: 'None of these topics are discussed in the post.',
-          weight: 0.9,
+          weight: 0.92,
         },
       ],
     },
@@ -301,7 +301,7 @@ export const questions = {
         {
           answer:
             'Both the title and content of the submission post were lacking in information, and the steps to bug reproduction were badly explained and, at times, impossible to follow.',
-          weight: 0.9,
+          weight: 0.7,
         },
       ],
     },
@@ -344,7 +344,7 @@ export const questions = {
         },
         {
           answer: 'The contributor made efforts to pinpoint the cause, but without success.',
-          weight: 0.9,
+          weight: 0.95,
         },
         {
           answer:
@@ -421,7 +421,7 @@ export const questions = {
         },
         {
           answer: 'No metric was chosen.',
-          weight: 0.8,
+          weight: 0.7,
         },
       ],
     },
@@ -508,7 +508,7 @@ export const questions = {
         },
         {
           answer: 'It’s a recurring analysis covering too short a time frame (i.e., daily).',
-          weight: 0.87,
+          weight: 0.82,
         },
       ],
     },
@@ -522,11 +522,11 @@ export const questions = {
         },
         {
           answer: 'Average',
-          weight: 0.97,
+          weight: 0.95,
         },
         {
           answer: 'Below Average',
-          weight: 0.9,
+          weight: 0.85,
         },
         {
           answer: 'Low Quality',
@@ -556,7 +556,7 @@ export const questions = {
         {
           answer:
             'This contribution adds nearly no value to the open source community and ecosystem or the specific project.',
-          weight: 0.2,
+          weight: 0.15,
         },
       ],
     },
@@ -579,7 +579,7 @@ export const questions = {
         },
         {
           answer: 'Very low quality.',
-          weight: 0.4,
+          weight: 0.3,
         },
       ],
     },
@@ -2034,7 +2034,7 @@ export const questions = {
         },
         {
           answer: 'The post is hard to read and the content is sometimes hard to understand.',
-          weight: 0.85,
+          weight: 0.8,
         },
       ],
     },
@@ -2059,7 +2059,7 @@ export const questions = {
         {
           answer:
             'This contribution holds little value to the project and/or open source ecosystem.',
-          weight: 0.5,
+          weight: 0.3,
         },
       ],
     },
@@ -2080,7 +2080,7 @@ export const questions = {
         },
         {
           answer: 'This contribution shows little work done.',
-          weight: 0.6,
+          weight: 0.7,
         },
       ],
     },
@@ -2420,7 +2420,7 @@ export const questions = {
         },
         {
           answer: 'Most of the post contains information gathered from other sources.',
-          weight: 0.95,
+          weight: 0.88,
         },
         {
           answer: 'The author knows little or nothing about the anti-abuse topic.',
@@ -2514,7 +2514,7 @@ export const questions = {
         {
           answer:
             'The contribution does not empower the reader to participate in antiabuse initiatives.',
-          weight: 0.92,
+          weight: 0.88,
         },
       ],
     },
@@ -2528,15 +2528,15 @@ export const questions = {
         },
         {
           answer: 'The post is of decent quality, but there is room for improvement.',
-          weight: 0.97,
+          weight: 0.95,
         },
         {
           answer: 'The post is of average quality.',
-          weight: 0.9,
+          weight: 0.88,
         },
         {
           answer: 'The quality of the post is below average.',
-          weight: 0.6,
+          weight: 0.55,
         },
       ],
     },
@@ -2549,15 +2549,15 @@ export const questions = {
         },
         {
           answer: '676-850 words.',
-          weight: 0.98,
+          weight: 0.96,
         },
         {
           answer: '501-675 words.',
-          weight: 0.94,
+          weight: 0.90,
         },
         {
           answer: 'Less than 500 words.',
-          weight: 0.9,
+          weight: 0.85,
         },
       ],
     },

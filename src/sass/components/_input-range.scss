@@ -1,0 +1,73 @@
+@mixin rangeThumb {
+  transform: translateY(-45%) rotate(0);
+  width: 3.5px;
+  height: 2rem;
+  background: $color-primary-dark-2;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+@mixin rangeThumbActive {
+  background: $color-primary-dark-1;
+  width: 2rem;
+  border-radius: 50%;
+  transform: translateY(-45%) rotate(180deg);
+}
+
+@mixin rangeTrack {
+  width: 100%;
+  height: 2px;
+  cursor: pointer;
+  background: $color-primary-dark-2;
+}
+
+.range {
+  width: 100%;
+}
+
+.range input {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  outline: none;
+
+  // slider thumb
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    @include rangeThumb;
+  }
+
+  &::-moz-range-thumb {
+    @include rangeThumb;
+  }
+
+  &::-ms-thumb {
+    @include rangeThumb;
+  }
+
+  &:hover::-webkit-slider-thumb,
+  &:active::-webkit-slider-thumb {
+    @include rangeThumbActive;
+  }
+
+  &:hover::-moz-range-thumb,
+  &:active::-moz-range-thumb {
+    @include rangeThumbActive;
+  }
+
+  &:hover::-ms-thumb,
+  &:active::-ms-thumb {
+    @include rangeThumbActive;
+  }
+
+  // slider track
+  &::-webkit-slider-runnable-track {
+    @include rangeTrack;
+  }
+  &::-moz-range-track {
+    @include rangeTrack;
+  }
+  &::-ms-track {
+    @include rangeTrack;
+  }
+}

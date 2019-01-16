@@ -10,7 +10,7 @@
     <div class="container">
       <div class="nav">
         <span class="h1">Final score</span>
-        <span class="h1" id="score">100</span>
+        <span><span class="h1" id="score">100</span>/100</span>
       </div>
 
       <div class="container-body">
@@ -23,8 +23,8 @@
           ></select>
         </div>
 
-        <ul id="accordion">
-          <li>
+        <ul class="accordion">
+          <li class="accordion__item">
             <input
               type="checkbox"
               id="accordion-questionnaire"
@@ -35,7 +35,7 @@
             </label>
             <ul id="questions"></ul>
           </li>
-          <li>
+          <li class="accordion__item">
             <input
               type="checkbox"
               id="accordion-review-comment"
@@ -55,10 +55,10 @@
         </ul>
 
         <div class="buttons">
-          <a id="reset" href="#" type="button" class="btn">Reset</a
-          ><a id="copy" href="#" type="button" class="btn btn--primary"
-            >Copy comment</a
-          >
+          <button id="reset" class="btn">Reset</button
+          ><button id="copy-review" class="btn btn--primary">
+            Copy review
+          </button>
         </div>
       </div>
     </div>

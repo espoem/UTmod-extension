@@ -1,0 +1,103 @@
+// https://codepen.io/thelaazyguy/pen/MvqpPr/
+// modified
+
+$checkbox-width: 4rem;
+$checkbox-height: $checkbox-width / 2;
+$switch-width: $checkbox-width / 2;
+$switch-height: $checkbox-height;
+
+.checkbox_wrapper {
+  display: flex;
+}
+
+.checkbox_label {
+  flex: 1;
+  align-self: center;
+}
+
+.switch_box {
+  justify-content: center;
+  align-items: center;
+}
+
+.checkbox_input_wrapper {
+  width: $checkbox-width;
+  height: $checkbox-height;
+  position: relative;
+  cursor: pointer;
+}
+
+.checkbox_input_wrapper input[type='checkbox'] {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: rgb(0, 29, 29);
+  border-radius: 2px;
+  position: relative;
+  outline: 0;
+  transition: all 0.2s;
+  opacity: 0.75;
+}
+
+.checkbox_input_wrapper input[type='checkbox']:after {
+  position: absolute;
+  content: '';
+  top: 3px;
+  left: 3px;
+  width: calc(#{$switch-width} - 2 * 3px); // half width minus border
+  height: calc(#{$switch-height} - 2 * 3px); // height minus border
+  background: #dfeaec;
+  z-index: 2;
+  border-radius: 2px;
+  transition: all 0.35s;
+}
+
+.checkbox_input_wrapper svg {
+  position: absolute;
+  top: 50%;
+  fill: #fff;
+  transition: all 0.35s;
+  z-index: 1;
+}
+
+.checkbox_input_wrapper .is_checked {
+  width: calc(100% / 4.4);
+
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto 16%;
+  opacity: 0;
+}
+
+.checkbox_input_wrapper .is_unchecked {
+  width: calc(100% / 5.3);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto 65%;
+  opacity: 1;
+}
+
+/* Checked State */
+.checkbox_input_wrapper input[type='checkbox']:checked {
+  background: rgb(43, 137, 137);
+  opacity: 1;
+}
+
+.checkbox_input_wrapper input[type='checkbox']:checked:after {
+  left: calc(100% + 3px - #{$switch-width});
+}
+
+.checkbox_input_wrapper input[type='checkbox']:checked + .is_checked {
+  opacity: 1;
+}
+
+.checkbox_input_wrapper input[type='checkbox']:checked ~ .is_unchecked {
+  opacity: 0;
+}

@@ -1,9 +1,11 @@
 @charset 'utf-8';
 
-@import "variables";
+@import 'variables';
+@import 'base';
+@import 'typography';
 
-@import "base";
+@import 'components/input-range';
+@import 'components/accordion';
+@import 'components/checkbox';
 
-@import "typography";
-
-@import "popup";
+@import 'popup';
