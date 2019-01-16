@@ -102,6 +102,8 @@ function generateQuestions(parentNode) {
     const checkbox = new Checkbox(`question-${+idx + 1}-checkbox-advanced`, 'Advanced');
     qItem.appendChild(checkbox.body);
 
+    const qAdvancedWrapper = document.createElement('div');
+    qAdvancedWrapper.classList.add('advanced_wrapper');
     const qSliderWrapper = document.createElement('div');
     qSliderWrapper.classList.add('range');
     const qSlider = document.createElement('input');
@@ -112,8 +114,15 @@ function generateQuestions(parentNode) {
     qSlider.value = ansSorted[0].weight;
     qSlider.setAttribute('value', ansSorted[0].weight);
 
+    // extra comment for a specific question
+    const qSliderComment = document.createElement('textarea');
+    qSliderComment.setAttribute('placeholder', 'Write additional comment for this question');
+    qSliderComment.classList.add('range__comment');
+
     qSliderWrapper.appendChild(qSlider);
-    qItem.appendChild(qSliderWrapper);
+    qAdvancedWrapper.appendChild(qSliderWrapper);
+    qAdvancedWrapper.appendChild(qSliderComment);
+    qItem.appendChild(qAdvancedWrapper);
     qSelect.addEventListener('input', () => {
       qSlider.value = qSelect.options[qSelect.selectedIndex].value;
 

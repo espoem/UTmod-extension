@@ -53,6 +53,7 @@
 
   & > li {
     padding: 1.2rem;
+    height: 100%;
   }
 
   & select[id^='question-'] {
@@ -91,13 +92,24 @@ select {
   border: 1px solid $color-primary-dark-1;
 }
 
-#review-comment {
-  padding: 1.2rem;
+textarea {
   min-width: 100%;
   max-width: 100%;
-  min-height: 20rem;
   border: 0;
   outline: none;
+
+  &.range__comment {
+    resize: none;
+    height: 10rem;
+    border-left: 1px dashed $color-primary-dark-1;
+    padding: 0.5rem;
+    margin-top: 1.2rem;
+  }
+}
+
+#review-comment {
+  padding: 1.2rem;
+  min-height: 20rem;
   resize: none;
 }
 
@@ -145,18 +157,18 @@ select {
 }
 
 div[id$='-checkbox-advanced'] {
-  & + .range {
+  & + .advanced_wrapper {
     max-height: 0;
     overflow: hidden;
     transition: all 0.3s ease-in-out;
     opacity: 0;
   }
 
-  &.is-active + .range {
-    max-height: 10rem;
+  &.is-active + .advanced_wrapper {
+    max-height: 100rem;
     overflow: visible;
     margin-top: 1.8rem;
-    margin-bottom: 1.2rem;
+    // margin-bottom: 1.2rem;
     opacity: 1;
   }
 }
