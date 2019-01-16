@@ -147,6 +147,11 @@ function generateQuestions(parentNode) {
         }
       }
       qSelect.selectedIndex = idx;
+
+      checkCommentOnSliderChange(qSelect, qSlider, qSliderComment);
+    });
+    qSliderComment.addEventListener('input', () => {
+      checkCommentOnSliderChange(qSelect, qSlider, qSliderComment);
     });
 
     const checkboxHandle = checkbox.body.querySelector('input');
@@ -156,10 +161,27 @@ function generateQuestions(parentNode) {
         qSlider.value = qSelect.options[qSelect.selectedIndex].value;
         updateScore();
       }
+      checkCommentOnSliderChange(qSelect, qSlider, qSliderComment);
     });
 
     questionsNode.appendChild(qItem);
     updateScore();
+  }
+
+  function checkCommentOnSliderChange(qSelect, qSlider, qSliderComment) {
+    // console.log(
+    //   qSelect.options[qSelect.selectedIndex].value,
+    //   qSlider.value,
+    //   qSliderComment.value.length,
+    // );
+    if (
+      qSelect.options[qSelect.selectedIndex].value != qSlider.value
+      && !(qSliderComment.value.length > 20)
+    ) {
+      qSliderComment.classList.add('error');
+    } else {
+      qSliderComment.classList.remove('error');
+    }
   }
 }
 
