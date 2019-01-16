@@ -8,11 +8,13 @@ window.addEventListener('DOMContentLoaded', () => {
   generateCategoriesOptions(catSelect);
   generateQuestions(catSelect);
 
+  const scoreNode = document.querySelector('#score');
+  scoreNode.addEventListener('click', () => copyScore(scoreNode));
+
   catSelect.addEventListener('input', () => {
     generateQuestions(catSelect);
 
     // reset score
-    const scoreNode = document.querySelector('#score');
     scoreNode.innerText = 100;
   });
 
@@ -50,6 +52,16 @@ window.addEventListener('DOMContentLoaded', () => {
     node.removeChild(dummy);
   });
 });
+
+function copyScore(scoreNode) {
+  const range = document.createRange();
+  range.selectNode(scoreNode);
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+  document.execCommand('copy');
+  sel.removeAllRanges();
+}
 
 function sortByWeightDesc(a, b) {
   return +b.weight - a.weight;

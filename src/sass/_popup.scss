@@ -19,6 +19,15 @@
   z-index: 1000;
 }
 
+#score {
+  cursor: pointer;
+
+  &:active::before {
+    content: 'copied';
+    font-size: 1rem;
+  }
+}
+
 .container-body {
   width: 100%;
   height: 100%;
