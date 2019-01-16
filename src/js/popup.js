@@ -174,13 +174,18 @@ function generateQuestions(parentNode) {
     //   qSlider.value,
     //   qSliderComment.value.length,
     // );
+    const reviewBtn = document.querySelector('#copy-review');
     if (
       qSelect.options[qSelect.selectedIndex].value != qSlider.value
       && !(qSliderComment.value.length > 20)
     ) {
       qSliderComment.classList.add('error');
+      reviewBtn.classList.add('btn--disabled')
+      reviewBtn.disabled = true;
     } else {
       qSliderComment.classList.remove('error');
+      reviewBtn.classList.remove('btn--disabled')
+      reviewBtn.disabled = false;
     }
   }
 }

@@ -130,6 +130,8 @@ textarea {
   text-decoration: none;
   color: $color-primary-dark-1;
   font-size: 1.4rem;
+  outline: none;
+  background: $color-white;
 
   &:not(:first-of-type) {
     margin-left: 1.2rem;
@@ -147,6 +149,17 @@ textarea {
   &:active {
     background: $color-primary;
     color: $color-white;
+  }
+
+  &--disabled {
+    background: $color-disabled;
+    border: 0;
+    cursor: not-allowed;
+
+    &:hover {
+      background: $color-disabled;
+      border: 0;
+    }
   }
 }
 
