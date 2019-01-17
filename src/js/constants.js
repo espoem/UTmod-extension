@@ -1,3 +1,8 @@
+export const scoreModes = Object.freeze({
+  MULT: 'mult',
+  ADD: 'add',
+});
+
 export const categories = [
   {
     name: 'Blog',
