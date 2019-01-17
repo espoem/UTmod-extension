@@ -287,17 +287,17 @@ function getQuestionnaireResult() {
     '***Results of the questionnaire used to evaluate this contribution are included below.***',
   ];
   const weights = [];
-  for (const q of questions) {
+  for (let i = 0, len = questions.length; i < len; ++i) {
     const part = [];
-    part.push(q.innerHTML);
-    const select = q.parentNode.querySelector('select');
+    part.push(questions[i].innerHTML);
+    const select = questions[i].parentNode.querySelector('select');
     const answer = select.options[select.selectedIndex].innerText;
-    const slider = q.parentNode.querySelector('div.range > input[type=range]');
+    const slider = questions[i].parentNode.querySelector('div.range > input[type=range]');
     const weight = slider.value;
     weights.push(+weight);
-    const comment = q.parentNode.querySelector('textarea').value;
+    const comment = questions[i].parentNode.querySelector('textarea').value;
 
-    let ans = `- Answer: ${answer}\n- Factor: ${weight}`;
+    let ans = `- Answer: ${answer}\n- Value: ${weight}`;
     if (slider.value !== select.options[select.selectedIndex].value) {
       ans += ` (orig. ${select.options[select.selectedIndex].value})`;
     }
