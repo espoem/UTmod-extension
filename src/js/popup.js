@@ -98,8 +98,9 @@ function generateQuestions(parentNode) {
     const qSelect = document.createElement('select');
     qSelect.id = `question-${+idx + 1}-select`;
 
-    const ansSorted = q.answers.sort(sortByWeightDesc);
-    for (const aIdx in ansSorted) {
+    const ansSorted = Array.from(q.answers).sort(sortByWeightDesc);
+    for (const aIdx in q.answers) {
+      // original questionnaire contains some unsorted questions || use ansSorted in future
       const ans = document.createElement('option');
       ans.value = q.answers[aIdx].weight;
       ans.innerText = q.answers[aIdx].answer;
