@@ -7,10 +7,14 @@ window.addEventListener('DOMContentLoaded', () => {
   const scoreNode = document.querySelector('#score');
   scoreNode.addEventListener('click', () => copyScore(scoreNode));
 
-  const options = createScoreModeCheckbox();
   const optionsWrapper = document.querySelector('#qn-options');
+  const options = createScoreModeCheckbox();
   optionsWrapper.appendChild(options);
   options.addEventListener('input', () => resetQuestionnaire(catSelect));
+
+  const questInComment = createIncludeQuestionnaireInCommentCheckbox();
+  questInComment.querySelector('input').checked = true;
+  optionsWrapper.appendChild(questInComment);
 
   const catSelect = document.querySelector('#category-select');
   generateCategoriesOptions(catSelect);
@@ -79,6 +83,14 @@ function createScoreModeCheckbox() {
   );
   console.log(scoreModeChkbox);
   return scoreModeChkbox.body;
+}
+
+function createIncludeQuestionnaireInCommentCheckbox() {
+  const reviewCheckbox = new Checkbox(
+    'qn-quest-in-comment',
+    'Include questionnaire results',
+  );
+  return reviewCheckbox.body;
 }
 
 function getScoreMode() {
@@ -353,9 +365,10 @@ function getReviewCommentBody() {
     }
   }
 
+  const includeQuest = document.querySelector('#qn-quest-in-comment input').checked;
+
   let parts = [
-    // getParWithGuidelinesLink(cIdx),
-    getQuestionnaireResult(),
+    includeQuest ? getQuestionnaireResult() : getParWithGuidelinesLink(cIdx),
     getParWithDiscordLink(),
     getModeratorSignature(),
   ];
