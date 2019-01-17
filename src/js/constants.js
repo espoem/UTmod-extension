@@ -1,4 +1,3 @@
-// TODO: check all categories
 export const categories = [
   {
     name: 'Blog',
