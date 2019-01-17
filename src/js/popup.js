@@ -256,14 +256,14 @@ function updateScore() {
   scoreNode.innerText = Math.max(Math.min(Math.round(score), 100), 0);
 }
 
-function calculateScore(mode = scoreModes.MULT) {
+function calculateScore(scoreMode) {
   const sliders = document.querySelectorAll('#questions input[type=range]');
   let score = 100;
-  for (const s of sliders) {
-    if (mode === scoreModes.MULT) {
-      score *= +s.value;
+  for (let i = 0, len = sliders.length; i < len; ++i) {
+    if (scoreMode === scoreModes.MULT) {
+      score *= sliders[i].valueAsNumber;
     } else {
-      score += +s.value;
+      score += sliders[i].valueAsNumber;
     }
   }
   return score;
