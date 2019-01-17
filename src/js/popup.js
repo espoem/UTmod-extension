@@ -312,7 +312,22 @@ function getQuestionnaireResult() {
 
   const scoreNode = document.querySelector('#score');
   parts.push(`**Final score: ${scoreNode.innerText}/100**`);
-  parts.push(`Score calculation: ${[100, ...weights].join(' * ')} ≈ ${scoreNode.innerText}`);
+  const scoreMode = getScoreMode();
+  if (scoreMode === scoreModes.MULT) {
+    parts.push(`Score calculation: ${[100, ...weights].join(' * ')} ≈ ${scoreNode.innerText}`);
+
+  } else {
+    const w = []
+    for (var i = 0, len = weights.length; i < len; ++i) {
+        if (weights[i] < 0) {
+          w.push(`- ${+weights[i]*(-1)}`)
+        } else {
+          w.push(`+ ${+weights[i]}`)
+        }
+    }
+    parts.push(`Score calculation: ${[100, ...w].join(' ')} ≈ ${scoreNode.innerText}`);
+
+  }
 
   return parts.join('\n\n');
 }
