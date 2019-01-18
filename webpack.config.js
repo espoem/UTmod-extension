@@ -10,7 +10,7 @@ module.exports = (env, argv) => {
     entry: {
       popup: path.resolve(__dirname, 'src', 'js', 'popup.js'),
       background: path.resolve(__dirname, 'src', 'js', 'background.js'),
-      options: path.resolve(__dirname, 'src', 'js', 'options.js'),
+      // options: path.resolve(__dirname, 'src', 'js', 'options.js'),
     },
     output: {
       path: path.resolve(__dirname, 'dist'),
@@ -84,11 +84,11 @@ module.exports = (env, argv) => {
       //   filename: 'background.html',
       //   chunks: ['background'],
       // }),
-      new HtmlWebpackPlugin({
-        template: path.resolve(__dirname, 'src', 'html', 'options.html'),
-        filename: 'options.html',
-        chunks: ['options'],
-      }),
+      // new HtmlWebpackPlugin({
+      //   template: path.resolve(__dirname, 'src', 'html', 'options.html'),
+      //   filename: 'options.html',
+      //   chunks: ['options'],
+      // }),
     ],
   };
   return config;
