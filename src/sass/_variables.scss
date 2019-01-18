@@ -1,10 +1,18 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:300,400,400i,700');
 
+// FONTS
 $font-primary: 'Lato', 'Open Sans', sans-serif;
 
+// COLORS
 $color-primary: rgb(43, 137, 137);
 $color-primary-dark-1: rgb(31, 80, 80);
 $color-primary-dark-2: rgb(0, 29, 29);
 $color-white: rgb(255, 255, 255);
 $color-error: rgb(237, 21, 21);
 $color-disabled: rgb(204, 209, 209);
+
+// DIMENSIONS
+$height-navbar: 4.8rem;
+$height-navpages: 3.6rem;
+
+$padding-default: 1.2rem;

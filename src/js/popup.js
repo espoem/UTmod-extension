@@ -4,10 +4,12 @@ import { categories, questions, scoreModes } from './constants';
 import Checkbox from './checkbox';
 
 window.addEventListener('DOMContentLoaded', () => {
+  setNavLabelText('Final score');
+  createScoreNode();
   const scoreNode = document.querySelector('#score');
   scoreNode.addEventListener('click', () => copyScore(scoreNode));
 
-  const optionsWrapper = document.querySelector('#qn-options');
+  const optionsWrapper = document.querySelector('#ut-questionnaire-options');
   const options = createScoreModeCheckbox();
   optionsWrapper.appendChild(options);
   options.addEventListener('input', () => resetQuestionnaire(catSelect));
@@ -16,7 +18,7 @@ window.addEventListener('DOMContentLoaded', () => {
   questInComment.querySelector('input').checked = true;
   optionsWrapper.appendChild(questInComment);
 
-  const catSelect = document.querySelector('#category-select');
+  const catSelect = document.querySelector('#ut-category-select');
   generateCategoriesOptions(catSelect);
   generateQuestions(catSelect);
 
@@ -24,8 +26,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // toggle accordion items
   const accordionInputs = document.querySelectorAll('.accordion__item > input[type=checkbox]');
+  console.log(accordionInputs);
   for (const i of accordionInputs) {
     const label = i.nextSibling;
+    console.log(label);
     i.addEventListener('input', () => label.classList.toggle('is-active'));
   }
 
@@ -54,13 +58,30 @@ window.addEventListener('DOMContentLoaded', () => {
   previewBtn.addEventListener('click', () => {
     const dummy = document.createElement('textarea');
     dummy.value = getReviewCommentBody();
-    const node = document.querySelector('.container');
+    const node = document.querySelector('.ut-container');
     node.appendChild(dummy);
     dummy.select();
     document.execCommand('copy');
     node.removeChild(dummy);
   });
 });
+
+function createScoreNode() {
+  const parent = document.querySelector('.ut-nav__val');
+  parent.innerHTML = '';
+  const scoreDiv = document.createElement('div');
+  const scoreSpan = document.createElement('span');
+  scoreSpan.id = 'score';
+  scoreSpan.innerHTML = '100';
+  scoreDiv.appendChild(scoreSpan);
+  scoreDiv.innerHTML += '/100';
+  parent.appendChild(scoreDiv);
+}
+
+function setNavLabelText(labelText) {
+  const navLabel = document.querySelector('.ut-nav__label');
+  navLabel.innerHTML = labelText;
+}
 
 function resetQuestionnaire(catSelect) {
   generateQuestions(catSelect);
@@ -327,18 +348,16 @@ function getQuestionnaireResult() {
   const scoreMode = getScoreMode();
   if (scoreMode === scoreModes.MULT) {
     parts.push(`Score calculation: ${[100, ...weights].join(' * ')} ≈ ${scoreNode.innerText}`);
-
   } else {
-    const w = []
-    for (var i = 0, len = weights.length; i < len; ++i) {
-        if (weights[i] < 0) {
-          w.push(`- ${+weights[i]*(-1)}`)
-        } else {
-          w.push(`+ ${+weights[i]}`)
-        }
+    const w = [];
+    for (let i = 0, len = weights.length; i < len; ++i) {
+      if (weights[i] < 0) {
+        w.push(`- ${+weights[i] * -1}`);
+      } else {
+        w.push(`+ ${+weights[i]}`);
+      }
     }
     parts.push(`Score calculation: ${[100, ...w].join(' ')} ≈ ${scoreNode.innerText}`);
-
   }
 
   return parts.join('\n\n');
@@ -355,7 +374,8 @@ function getAnswersLinkPart() {
 
 function getReviewCommentBody() {
   const comment = document.querySelector('#review-comment');
-  const category = document.querySelector('#category-select');
+  console.log(comment);
+  const category = document.querySelector('#ut-category-select');
 
   let cIdx = 0;
   for (const c of categories) {
