@@ -1,88 +1,37 @@
-.container {
+.ut-container {
   width: 40rem;
-  max-height: 60rem;
-  overflow-y: scroll;
+  height: 60rem;
+  display: grid;
+  grid-template-rows: $height-navbar $height-navpages 1fr;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-areas: 'h h h h h h' 'p p p p p p' 'b b b b b b';
+  overflow: auto;
+  background: $color-white;
 }
 
-.nav {
-  width: 100%;
-  height: 48px;
+.ut-nav {
+  grid-area: h;
   background: $color-primary-dark-2;
   color: $color-white;
-  display: flex;
+  font-size: 1.6rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-content: space-between;
+  align-items: center;
+  padding: $padding-default;
   position: sticky;
   top: 0;
-  left: 0;
-  justify-content: space-between;
-  padding: 0 1.2rem;
-  align-items: center;
   z-index: 1000;
-}
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.3);
 
-#score {
-  cursor: pointer;
-
-  &:active::before {
-    content: 'copied';
-    font-size: 1rem;
+  &__val {
+    justify-self: end;
   }
 }
 
-.container-body {
-  width: 100%;
-  height: 100%;
-  max-height: calc(60rem - 48px);
-  background: $color-white;
+.ut-body {
+  grid-area: b;
   padding: 1.2rem;
-}
-
-.category {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  &__label {
-    font-size: 1.4rem;
-    font-weight: 300;
-    padding-left: 1.2rem;
-  }
-}
-
-#questions {
-  list-style: none;
-
-  & > li {
-    padding: 1.2rem;
-    height: 100%;
-  }
-
-  & select[id^='question-'] {
-    margin-top: 1.6rem;
-    width: 100%;
-    font-size: 1.2rem;
-    padding: 0.2rem;
-    text-overflow: ellipsis;
-  }
-}
-
-.questions__item:not(:first-of-type) {
-  width: 100%;
-  margin-top: 2rem;
-}
-
-.question {
-  &__text {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: $color-primary;
-  }
-
-  &__decorator {
-    margin-top: 0.3rem;
-    width: 10%;
-    height: 2px;
-    background: $color-primary;
-  }
 }
 
 select {
@@ -111,25 +60,12 @@ textarea {
   }
 }
 
-#review-comment {
-  padding: 1.2rem;
-  min-height: 20rem;
-  resize: none;
-}
-
-.qn-options {
-  width: 100%;
-
-  & .checkbox_label {
-    padding-left: 1.2rem;
-    font-size: 1.4rem;
-  }
-}
-
 .buttons {
-  margin: 6rem 0 1.2rem 0;
-  display: flex;
-  justify-content: flex-end;
+  display: grid;
+  justify-content: end;
+  grid-auto-flow: column;
+  grid-column-gap: 1.2rem;
+  align-self: end;
 }
 
 .btn {
@@ -141,33 +77,26 @@ textarea {
   font-size: 1.4rem;
   outline: none;
   background: $color-white;
-
-  &:not(:first-of-type) {
-    margin-left: 1.2rem;
-  }
+  cursor: pointer;
 
   &--primary {
     color: $color-white;
     background: $color-primary;
-
-    &:hover {
-      background: $color-primary-dark-1;
-    }
   }
 
   &:active {
-    background: $color-primary;
+    background: $color-primary-dark-1;
     color: $color-white;
   }
 
   &--disabled {
     background: $color-disabled;
-    border: 0;
+    border: 1px solid $color-disabled;
     cursor: not-allowed;
 
     &:hover {
       background: $color-disabled;
-      border: 0;
+      border: 1px solid $color-disabled;
     }
   }
 }
@@ -179,7 +108,7 @@ textarea {
 
 .checkbox_label {
   font-weight: 300;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
 }
 
 div[id$='-checkbox-advanced'] {
@@ -194,7 +123,37 @@ div[id$='-checkbox-advanced'] {
     max-height: 100rem;
     overflow: visible;
     margin-top: 1.8rem;
-    // margin-bottom: 1.2rem;
     opacity: 1;
+  }
+}
+
+.ut-pages {
+  grid-area: p;
+  background: $color-primary-dark-2;
+  color: $color-white;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 1fr);
+  grid-auto-flow: column;
+  font-size: 1.4rem;
+  position: sticky;
+  top: $height-navbar;
+  z-index: 1000;
+
+  &--active {
+    background: $color-primary;
+  }
+
+  & > * {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      background: $color-primary;
+    }
+
+    &:active {
+      background: $color-primary-dark-1;
+    }
   }
 }

@@ -1,0 +1,95 @@
+#ut-questionnaire {
+  display: grid;
+  grid-template-rows: min-content 1fr auto min-content;
+  grid-row-gap: 1.2rem;
+  height: 100%;
+
+  & .accordion {
+    align-self: start;
+    font-size: 1.6rem;
+  }
+
+  & .buttons {
+    margin-top: 1.2rem;
+  }
+}
+
+.ut-nav {
+  &__val {
+    font-size: 1.2rem;
+  }
+}
+
+#score {
+  cursor: pointer;
+  font-size: 1.6rem;
+
+  &:active::before {
+    content: 'copied';
+    font-size: 1rem;
+  }
+}
+
+.ut-category {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__label {
+    font-size: 1.4rem;
+    font-weight: 300;
+    padding-left: 1.2rem;
+  }
+}
+
+#questions {
+  list-style: none;
+
+  & > li {
+    padding: 1.2rem;
+    height: 100%;
+  }
+
+  & select[id^='question-'] {
+    margin-top: 1.6rem;
+    width: 100%;
+    font-size: 1.2rem;
+    padding: 0.2rem;
+    text-overflow: ellipsis;
+  }
+}
+
+.questions__item:not(:first-of-type) {
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.question {
+  &__text {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: $color-primary;
+  }
+
+  &__decorator {
+    margin-top: 0.3rem;
+    width: 10%;
+    height: 2px;
+    background: $color-primary;
+  }
+}
+
+#review-comment {
+  padding: 1.2rem;
+  min-height: 20rem;
+  resize: none;
+}
+
+#ut-questionnaire-options {
+  width: 100%;
+
+  & .checkbox_label {
+    padding-left: 1.2rem;
+    font-size: 1.4rem;
+  }
+}
