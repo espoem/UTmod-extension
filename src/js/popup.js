@@ -88,7 +88,7 @@ function createScoreModeCheckbox() {
 function createIncludeQuestionnaireInCommentCheckbox() {
   const reviewCheckbox = new Checkbox(
     'qn-quest-in-comment',
-    'Include questionnaire results',
+    'Include questionnaire results in review',
   );
   return reviewCheckbox.body;
 }
