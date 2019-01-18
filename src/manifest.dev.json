@@ -17,5 +17,6 @@
     "128": "img/UT-128px.png",
     "64": "img/UT-64px.png",
     "32": "img/UT-32px.png"
-  }
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }

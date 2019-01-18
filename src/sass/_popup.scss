@@ -117,6 +117,15 @@ textarea {
   resize: none;
 }
 
+.qn-options {
+  width: 100%;
+
+  & .checkbox_label {
+    padding-left: 1.2rem;
+    font-size: 1.4rem;
+  }
+}
+
 .buttons {
   margin: 6rem 0 1.2rem 0;
   display: flex;

@@ -1,22 +1,26 @@
 import '../sass/main.scss';
 
-import { categories, questions } from './constants';
+import { categories, questions, scoreModes } from './constants';
 import Checkbox from './checkbox';
 
 window.addEventListener('DOMContentLoaded', () => {
+  const scoreNode = document.querySelector('#score');
+  scoreNode.addEventListener('click', () => copyScore(scoreNode));
+
+  const optionsWrapper = document.querySelector('#qn-options');
+  const options = createScoreModeCheckbox();
+  optionsWrapper.appendChild(options);
+  options.addEventListener('input', () => resetQuestionnaire(catSelect));
+
+  const questInComment = createIncludeQuestionnaireInCommentCheckbox();
+  questInComment.querySelector('input').checked = true;
+  optionsWrapper.appendChild(questInComment);
+
   const catSelect = document.querySelector('#category-select');
   generateCategoriesOptions(catSelect);
   generateQuestions(catSelect);
 
-  const scoreNode = document.querySelector('#score');
-  scoreNode.addEventListener('click', () => copyScore(scoreNode));
-
-  catSelect.addEventListener('input', () => {
-    generateQuestions(catSelect);
-
-    // reset score
-    scoreNode.innerText = 100;
-  });
+  catSelect.addEventListener('input', () => resetQuestionnaire(catSelect));
 
   // toggle accordion items
   const accordionInputs = document.querySelectorAll('.accordion__item > input[type=checkbox]');
@@ -27,9 +31,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const buttons = document.querySelectorAll('.btn');
   for (const b of buttons) {
-    b.addEventListener('click', (e) => {
-      e.preventDefault();
-    });
+    b.addEventListener('click', e => e.preventDefault());
   }
 
   // reset review
@@ -60,6 +62,10 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+function resetQuestionnaire(catSelect) {
+  generateQuestions(catSelect);
+}
+
 function copyScore(scoreNode) {
   const range = document.createRange();
   range.selectNode(scoreNode);
@@ -70,8 +76,35 @@ function copyScore(scoreNode) {
   sel.removeAllRanges();
 }
 
+function createScoreModeCheckbox() {
+  const scoreModeChkbox = new Checkbox(
+    'qn-score-mode',
+    'Use legacy scoring (resets questionnaire)',
+  );
+  console.log(scoreModeChkbox);
+  return scoreModeChkbox.body;
+}
+
+function createIncludeQuestionnaireInCommentCheckbox() {
+  const reviewCheckbox = new Checkbox(
+    'qn-quest-in-comment',
+    'Include questionnaire results in review',
+  );
+  return reviewCheckbox.body;
+}
+
+function getScoreMode() {
+  const scoreModeNode = document.querySelector('#qn-score-mode');
+  const checkHandle = scoreModeNode.querySelector('input');
+  return checkHandle.checked ? scoreModes.ADD : scoreModes.MULT;
+}
+
 function sortByWeightDesc(a, b) {
   return +b.weight - a.weight;
+}
+
+function sortByPointsLegacyDesc(a, b) {
+  return +b.pointsLegacy - a.pointsLegacy;
 }
 
 function generateQuestions(parentNode) {
@@ -82,6 +115,7 @@ function generateQuestions(parentNode) {
   }
 
   const currentCategory = parentNode.options[parentNode.selectedIndex].value;
+  const mode = getScoreMode();
   for (const idx in questions[currentCategory]) {
     const qItem = document.createElement('li');
     qItem.classList.add('questions__item');
@@ -98,11 +132,22 @@ function generateQuestions(parentNode) {
     const qSelect = document.createElement('select');
     qSelect.id = `question-${+idx + 1}-select`;
 
-    const ansSorted = q.answers.sort(sortByWeightDesc);
-    for (const aIdx in ansSorted) {
+    const answersOriginal = q.answers;
+    let answersSorted;
+    if (mode === scoreModes.MULT) {
+      answersSorted = Array.from(answersOriginal).sort(sortByWeightDesc);
+    } else {
+      answersSorted = Array.from(answersOriginal).sort(sortByPointsLegacyDesc);
+    }
+    for (const aIdx in answersOriginal) {
+      // original questionnaire contains some unsorted questions || use ansSorted in future
       const ans = document.createElement('option');
-      ans.value = q.answers[aIdx].weight;
-      ans.innerText = q.answers[aIdx].answer;
+      if (mode === scoreModes.MULT) {
+        ans.value = answersOriginal[aIdx].weight;
+      } else {
+        ans.value = answersOriginal[aIdx].pointsLegacy;
+      }
+      ans.innerText = answersOriginal[aIdx].answer;
       qSelect.appendChild(ans);
     }
     qItem.appendChild(qSelect);
@@ -114,13 +159,7 @@ function generateQuestions(parentNode) {
     qAdvancedWrapper.classList.add('advanced_wrapper');
     const qSliderWrapper = document.createElement('div');
     qSliderWrapper.classList.add('range');
-    const qSlider = document.createElement('input');
-    qSlider.setAttribute('type', 'range');
-    qSlider.setAttribute('min', ansSorted[ansSorted.length - 1].weight);
-    qSlider.setAttribute('max', ansSorted[0].weight);
-    qSlider.setAttribute('step', 0.001);
-    qSlider.value = ansSorted[0].weight;
-    qSlider.setAttribute('value', ansSorted[0].weight);
+    const qSlider = createScoreSlider(mode, answersSorted, answersOriginal);
 
     // extra comment for a specific question
     const qSliderComment = document.createElement('textarea');
@@ -194,6 +233,25 @@ function generateQuestions(parentNode) {
   }
 }
 
+function createScoreSlider(mode, ansSorted, ansOrig) {
+  const qSlider = document.createElement('input');
+  qSlider.setAttribute('type', 'range');
+  if (mode === scoreModes.MULT) {
+    qSlider.setAttribute('min', ansSorted[ansSorted.length - 1].weight);
+    qSlider.setAttribute('max', ansSorted[0].weight);
+    qSlider.setAttribute('step', 0.001);
+    qSlider.value = ansOrig[0].weight;
+    qSlider.setAttribute('value', ansOrig[0].weight);
+  } else {
+    qSlider.setAttribute('min', ansSorted[ansSorted.length - 1].pointsLegacy);
+    qSlider.setAttribute('max', ansSorted[0].pointsLegacy);
+    qSlider.setAttribute('step', 0.05);
+    qSlider.value = ansOrig[0].pointsLegacy;
+    qSlider.setAttribute('value', ansOrig[0].pointsLegacy);
+  }
+  return qSlider;
+}
+
 function generateCategoriesOptions(parentNode) {
   for (const category of categories) {
     const c = document.createElement('option');
@@ -204,17 +262,21 @@ function generateCategoriesOptions(parentNode) {
 }
 
 function updateScore() {
-  const score = calculateScore();
+  const scoreMode = getScoreMode();
+  const score = calculateScore(scoreMode);
   const scoreNode = document.querySelector('#score');
   scoreNode.innerText = Math.max(Math.min(Math.round(score), 100), 0);
 }
 
-function calculateScore() {
+function calculateScore(scoreMode) {
   const sliders = document.querySelectorAll('#questions input[type=range]');
   let score = 100;
-  for (const s of sliders) {
-    // score *= Math.pow(s.value, 1.2);
-    score *= s.value;
+  for (let i = 0, len = sliders.length; i < len; ++i) {
+    if (scoreMode === scoreModes.MULT) {
+      score *= sliders[i].valueAsNumber;
+    } else {
+      score += sliders[i].valueAsNumber;
+    }
   }
   return score;
 }
@@ -237,17 +299,17 @@ function getQuestionnaireResult() {
     '***Results of the questionnaire used to evaluate this contribution are included below.***',
   ];
   const weights = [];
-  for (const q of questions) {
+  for (let i = 0, len = questions.length; i < len; ++i) {
     const part = [];
-    part.push(q.innerHTML);
-    const select = q.parentNode.querySelector('select');
+    part.push(questions[i].innerHTML);
+    const select = questions[i].parentNode.querySelector('select');
     const answer = select.options[select.selectedIndex].innerText;
-    const slider = q.parentNode.querySelector('div.range > input[type=range]');
+    const slider = questions[i].parentNode.querySelector('div.range > input[type=range]');
     const weight = slider.value;
     weights.push(+weight);
-    const comment = q.parentNode.querySelector('textarea').value;
+    const comment = questions[i].parentNode.querySelector('textarea').value;
 
-    let ans = `- Answer: ${answer}\n- Factor: ${weight}`;
+    let ans = `- Answer: ${answer}\n- Value: ${weight}`;
     if (slider.value !== select.options[select.selectedIndex].value) {
       ans += ` (orig. ${select.options[select.selectedIndex].value})`;
     }
@@ -262,7 +324,22 @@ function getQuestionnaireResult() {
 
   const scoreNode = document.querySelector('#score');
   parts.push(`**Final score: ${scoreNode.innerText}/100**`);
-  parts.push(`Score calculation: ${[100, ...weights].join(' * ')} ≈ ${scoreNode.innerText}`);
+  const scoreMode = getScoreMode();
+  if (scoreMode === scoreModes.MULT) {
+    parts.push(`Score calculation: ${[100, ...weights].join(' * ')} ≈ ${scoreNode.innerText}`);
+
+  } else {
+    const w = []
+    for (var i = 0, len = weights.length; i < len; ++i) {
+        if (weights[i] < 0) {
+          w.push(`- ${+weights[i]*(-1)}`)
+        } else {
+          w.push(`+ ${+weights[i]}`)
+        }
+    }
+    parts.push(`Score calculation: ${[100, ...w].join(' ')} ≈ ${scoreNode.innerText}`);
+
+  }
 
   return parts.join('\n\n');
 }
@@ -288,9 +365,10 @@ function getReviewCommentBody() {
     }
   }
 
+  const includeQuest = document.querySelector('#qn-quest-in-comment input').checked;
+
   let parts = [
-    // getParWithGuidelinesLink(cIdx),
-    getQuestionnaireResult(),
+    includeQuest ? getQuestionnaireResult() : getParWithGuidelinesLink(cIdx),
     getParWithDiscordLink(),
     getModeratorSignature(),
   ];
