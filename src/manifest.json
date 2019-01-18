@@ -1,21 +1,21 @@
 {
   "manifest_version": 2,
   "name": "UTmod - Utopian reviews made easier",
-  "version": "0.2.1",
+  "version": "0.3.0",
 
   "description": "Extension to collect tools for Utopian reviewers to one place.",
   "browser_action": {
     "default_popup": "popup.html",
     "default_title": "UTmod",
     "default_icon": {
-      "128": "img/popup/UT-128px.png",
-      "64": "img/popup/UT-64px.png",
-      "32": "img/popup/UT-32px.png"
+      "128": "img/UT-128px.png",
+      "64": "img/UT-64px.png",
+      "32": "img/UT-32px.png"
     }
   },
   "icons": {
-    "128": "img/popup/UT-128px.png",
-    "64": "img/popup/UT-64px.png",
-    "32": "img/popup/UT-32px.png"
+    "128": "img/UT-128px.png",
+    "64": "img/UT-64px.png",
+    "32": "img/UT-32px.png"
   }
 }

@@ -1,16 +1,20 @@
 {
   "name": "utm",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "",
   "private": true,
+  "homepage": "https://github.com/espoem/UTmod-extension",
+  "bugs": {
+    "url": "https://github.com/espoem/UTmod-extension/issues"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --watch --mode development",
     "release": "webpack --mode production"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Martin Šmíd",
+  "license": "GPL-3.0",
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
