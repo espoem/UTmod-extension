@@ -3,6 +3,8 @@ export const scoreModes = Object.freeze({
   ADD: 'add',
 });
 
+export const maxScore = 100;
+
 export const categories = [
   {
     name: 'Blog',
