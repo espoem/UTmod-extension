@@ -1,5 +1,8 @@
-import { categories, questions, scoreModes, maxScore } from '../constants';
+import {
+  categories, questions, scoreModes, maxScore,
+} from '../constants';
 import Checkbox from '../checkbox';
+import Slider from '../components/slider';
 
 export function setupQuestionnairePage() {
   setNavLabelText('Final score');
@@ -242,20 +245,11 @@ function generateQuestions(parentNode) {
 }
 
 function createScoreSlider(mode, ansSorted, ansOrig) {
-  const qSlider = document.createElement('input');
-  qSlider.setAttribute('type', 'range');
+  let qSlider;
   if (mode === scoreModes.MULT) {
-    qSlider.setAttribute('min', ansSorted[ansSorted.length - 1].weight);
-    qSlider.setAttribute('max', ansSorted[0].weight);
-    qSlider.setAttribute('step', 0.001);
-    qSlider.value = ansOrig[0].weight;
-    qSlider.setAttribute('value', ansOrig[0].weight);
-  } else {
-    qSlider.setAttribute('min', ansSorted[ansSorted.length - 1].pointsLegacy);
-    qSlider.setAttribute('max', ansSorted[0].pointsLegacy);
-    qSlider.setAttribute('step', 0.05);
-    qSlider.value = ansOrig[0].pointsLegacy;
-    qSlider.setAttribute('value', ansOrig[0].pointsLegacy);
+      qSlider = new Slider('', ansSorted[ansSorted.length - 1].weight, ansSorted[0].weight, ansOrig[0].weight, 0.001);
+    } else {
+        qSlider = new Slider('', ansSorted[ansSorted.length - 1].pointsLegacy, ansSorted[0].pointsLegacy, ansOrig[0].pointsLegacy, 0.05);
   }
   return qSlider;
 }
