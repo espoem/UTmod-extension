@@ -3,6 +3,7 @@ import {
 } from '../constants';
 import Checkbox from '../checkbox';
 import Slider from '../components/slider';
+import { copyTextToClipboard } from '../utils';
 
 export function setupQuestionnairePage() {
   setNavLabelText('Final score');
@@ -45,13 +46,7 @@ export function setupQuestionnairePage() {
   // copy button to clipboard
   const previewBtn = document.querySelector('#copy-review');
   previewBtn.addEventListener('click', () => {
-    const dummy = document.createElement('textarea');
-    dummy.value = getReviewCommentBody();
-    const node = document.querySelector('.ut-container');
-    node.appendChild(dummy);
-    dummy.select();
-    document.execCommand('copy');
-    node.removeChild(dummy);
+    copyTextToClipboard(getReviewCommentBody());
   });
 }
 
@@ -62,10 +57,15 @@ function createScoreNode() {
   const scoreSpan = document.createElement('span');
   scoreSpan.id = 'score';
   scoreSpan.innerHTML = maxScore;
-  scoreSpan.addEventListener('click', () => copyScore(scoreNode));
   scoreDiv.appendChild(scoreSpan);
   scoreDiv.innerHTML += `/${maxScore}`;
   parent.appendChild(scoreDiv);
+
+  document.addEventListener('click', (e) => {
+    if (e.target && e.target.id === 'score') {
+      copyScore(scoreSpan);
+    }
+  });
 }
 
 function setNavLabelText(labelText) {
@@ -78,13 +78,7 @@ function resetQuestionnaire(catSelect) {
 }
 
 function copyScore(scoreNode) {
-  const range = document.createRange();
-  range.selectNode(scoreNode);
-  const sel = window.getSelection();
-  sel.removeAllRanges();
-  sel.addRange(range);
-  document.execCommand('copy');
-  sel.removeAllRanges();
+  copyTextToClipboard(scoreNode.innerHTML);
 }
 
 function createScoreModeCheckbox() {
@@ -247,9 +241,21 @@ function generateQuestions(parentNode) {
 function createScoreSlider(mode, ansSorted, ansOrig) {
   let qSlider;
   if (mode === scoreModes.MULT) {
-      qSlider = new Slider('', ansSorted[ansSorted.length - 1].weight, ansSorted[0].weight, ansOrig[0].weight, 0.001);
-    } else {
-        qSlider = new Slider('', ansSorted[ansSorted.length - 1].pointsLegacy, ansSorted[0].pointsLegacy, ansOrig[0].pointsLegacy, 0.05);
+    qSlider = new Slider(
+      '',
+      ansSorted[ansSorted.length - 1].weight,
+      ansSorted[0].weight,
+      ansOrig[0].weight,
+      0.001,
+    );
+  } else {
+    qSlider = new Slider(
+      '',
+      ansSorted[ansSorted.length - 1].pointsLegacy,
+      ansSorted[0].pointsLegacy,
+      ansOrig[0].pointsLegacy,
+      0.05,
+    );
   }
   return qSlider;
 }
