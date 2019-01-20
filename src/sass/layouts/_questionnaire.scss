@@ -1,8 +1,12 @@
 #ut-questionnaire {
-  display: grid;
+  display: none;
   grid-template-rows: min-content 1fr auto min-content;
   grid-row-gap: 1.2rem;
   height: 100%;
+
+  &.ut-body--active {
+    display: grid;
+  }
 
   & .accordion {
     align-self: start;
