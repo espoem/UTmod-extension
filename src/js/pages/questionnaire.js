@@ -15,7 +15,7 @@ export function setupQuestionnairePage() {
   const questInComment = createIncludeQuestionnaireInCommentCheckbox();
   questInComment.querySelector('input').checked = true;
   optionsWrapper.appendChild(questInComment);
-  const catSelect = document.querySelector('#ut-category-select');
+  const catSelect = document.querySelector('#ut-questionnaire .ut-category__select');
   generateCategoriesOptions(catSelect);
   generateQuestions(catSelect);
   catSelect.addEventListener('input', () => resetQuestionnaire(catSelect));
@@ -362,7 +362,7 @@ function getAnswersLinkPart() {
 function getReviewCommentBody() {
   const comment = document.querySelector('#review-comment');
   console.log(comment);
-  const category = document.querySelector('#ut-category-select');
+  const category = document.querySelector('#ut-questionnaire .ut-category__select');
 
   let cIdx = 0;
   for (const c of categories) {

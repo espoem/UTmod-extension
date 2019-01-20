@@ -15,12 +15,12 @@
 
       <div class="ut-body">
         <!-- QUESTIONNAIRE PAGE -->
-        <div id="ut-questionnaire">
+        <div id="ut-questionnaire" class="ut-body--active">
           <div class="ut-category">
             <div class="ut-category__label">
               Category
             </div>
-            <select name="category_select" id="ut-category-select" class="ut-category__select"></select>
+            <select name="category_select" class="ut-category__select"></select>
           </div>
 
           <ul class="accordion">
@@ -50,6 +50,27 @@
 
         </div>
         <!-- END OF QUESTIONNAIRE PAGE -->
+
+        <!-- NEW CONTRIBUTION PAGE -->
+        <div id="ut-new-contribution" class="ut-body--active">
+          <div id="github-search" class="ut-search">
+            <input type="text" placeholder="Search repository...">
+
+          </div>
+
+          <div class="ut-category">
+            <div class="ut-category__label">
+              Category
+            </div>
+            <select name="category_select" class="ut-category__select"></select>
+          </div>
+
+          <div class="buttons"><button id="copy-contribution-template" class="btn btn--primary">
+              Copy template
+            </button>
+          </div>
+        </div>
+        <!-- END OF NEW CONTRIBUTION PAGE -->
       </div>
 
       <div class="ut-pages">
