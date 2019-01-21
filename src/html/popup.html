@@ -52,17 +52,16 @@
         <!-- END OF QUESTIONNAIRE PAGE -->
 
         <!-- NEW CONTRIBUTION PAGE -->
-        <div id="ut-new-contribution" class="ut-body--active">
-          <div id="github-search" class="ut-search">
-            <input type="text" placeholder="Search repository...">
-
-          </div>
-
+        <div id="ut-new-contribution" class="">
           <div class="ut-category">
             <div class="ut-category__label">
               Category
             </div>
             <select name="category_select" class="ut-category__select"></select>
+          </div>
+
+          <div id="github-search" class="ut-search">
+            <input type="text" placeholder="Search repository...">
           </div>
 
           <div class="buttons"><button id="copy-contribution-template" class="btn btn--primary">
@@ -73,9 +72,9 @@
         <!-- END OF NEW CONTRIBUTION PAGE -->
       </div>
 
-      <div class="ut-pages">
-        <div class="ut-pages__new">+Contribution</div>
-        <div class="ut-pages__questionnaire ut-pages--active">+Review</div>
+      <div class="ut-tabs">
+        <div id="tab-new-contribution" class="ut-tabs__new unselectable">+Contribution</div>
+        <div id="tab-questionnaire" class="ut-tabs__questionnaire ut-tabs--active unselectable">+Review</div>
       </div>
 
     </div>

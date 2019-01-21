@@ -18,3 +18,14 @@ export function copyNodeTextToClipboard(scoreNode) {
   document.execCommand('copy');
   sel.removeAllRanges();
 }
+
+export function removeChildrenNodes(parent) {
+  while (parent.firstChild) {
+    parent.lastChild.remove();
+  }
+}
+
+export function setNavLabelText(labelText) {
+  const navLabel = document.querySelector('.ut-nav__label');
+  navLabel.innerHTML = labelText;
+}

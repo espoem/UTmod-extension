@@ -3,11 +3,12 @@ import {
 } from '../constants';
 import Checkbox from '../checkbox';
 import Slider from '../components/slider';
-import { copyTextToClipboard } from '../utils';
+import { copyTextToClipboard, removeChildrenNodes } from '../utils';
+import { generateCategoriesOptions } from '../components/category_select';
+import { setNavLabelText } from '../utils';
 
 export function setupQuestionnairePage() {
-  setNavLabelText('Final score');
-  createScoreNode();
+  setQuestionnairePageNavText();
   const optionsWrapper = document.querySelector('#ut-questionnaire-options');
   const options = createScoreModeCheckbox();
   optionsWrapper.appendChild(options);
@@ -66,11 +67,13 @@ function createScoreNode() {
       copyScore(scoreSpan);
     }
   });
+
+  updateScore();
 }
 
-function setNavLabelText(labelText) {
-  const navLabel = document.querySelector('.ut-nav__label');
-  navLabel.innerHTML = labelText;
+export function setQuestionnairePageNavText() {
+  setNavLabelText('Final score');
+  createScoreNode();
 }
 
 function resetQuestionnaire(catSelect) {
@@ -100,6 +103,9 @@ function createIncludeQuestionnaireInCommentCheckbox() {
 
 function getScoreMode() {
   const scoreModeNode = document.querySelector('#qn-score-mode');
+  if (!scoreModeNode) {
+    return scoreModes.MULT;
+  }
   const checkHandle = scoreModeNode.querySelector('input');
   return checkHandle.checked ? scoreModes.ADD : scoreModes.MULT;
 }
@@ -115,9 +121,7 @@ function sortByPointsLegacyDesc(a, b) {
 function generateQuestions(parentNode) {
   const questionsNode = document.querySelector('#questions');
   // remove old questions
-  while (questionsNode.hasChildNodes()) {
-    questionsNode.removeChild(questionsNode.lastChild);
-  }
+  removeChildrenNodes(questionsNode);
 
   const currentCategory = parentNode.options[parentNode.selectedIndex].value;
   const mode = getScoreMode();
@@ -260,20 +264,11 @@ function createScoreSlider(mode, ansSorted, ansOrig) {
   return qSlider;
 }
 
-function generateCategoriesOptions(parentNode) {
-  for (const category of categories) {
-    const c = document.createElement('option');
-    c.value = category.slug;
-    c.innerText = category.name;
-    parentNode.appendChild(c);
-  }
-}
-
 function updateScore() {
   const scoreMode = getScoreMode();
   const score = calculateScore(scoreMode);
   const scoreNode = document.querySelector('#score');
-  scoreNode.innerText = Math.max(Math.min(Math.round(score), maxScore), 0);
+  scoreNode.innerText = score;
 }
 
 function calculateScore(scoreMode) {
@@ -286,7 +281,7 @@ function calculateScore(scoreMode) {
       score += sliders[i].valueAsNumber;
     }
   }
-  return score;
+  return Math.max(Math.min(Math.round(score), maxScore), 0);
 }
 
 function getModeratorSignature() {
