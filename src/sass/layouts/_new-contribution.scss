@@ -1,0 +1,32 @@
+#ut-new-contribution {
+  display: none;
+  grid-template-rows: min-content min-content auto min-content;
+  grid-row-gap: 1.2rem;
+  height: 100%;
+
+  &.ut-body--active {
+    display: grid;
+  }
+
+  & .accordion {
+    align-self: start;
+    font-size: 1.6rem;
+  }
+
+  & .buttons {
+    margin-top: 1.2rem;
+  }
+}
+
+.ut-search {
+  width: 100%;
+  height: 30px;
+  background: pink;
+  & input {
+    width: 100%;
+    height: 100%;
+    outline: none;
+    border: none;
+    color: $color-primary-dark-2;
+  }
+}

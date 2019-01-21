@@ -133,7 +133,7 @@ div[id$='-checkbox-advanced'] {
   }
 }
 
-.ut-pages {
+.ut-tabs {
   grid-area: p;
   background: $color-primary-dark-2;
   color: $color-white;
@@ -162,4 +162,11 @@ div[id$='-checkbox-advanced'] {
       background: $color-primary-dark-1;
     }
   }
+}
+
+.unselectable {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
