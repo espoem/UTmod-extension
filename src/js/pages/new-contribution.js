@@ -147,7 +147,7 @@ async function copyTemplateToClipboard() {
   const ghUserUrl = ghUserNode && `https://github.com/${ghUserNode.value}`;
   const ghRepoUrl = ghRepoNode && ghRepoNode.getAttribute('data-repo-url');
   console.log(ghRepoUrl)
-  tBody = tBody.replace(/::GH_PROFILE::/, ghUserUrl || '');
+  tBody = tBody.replace(/::GH_PROFILE::/g, ghUserUrl || '');
   tBody = tBody.replace(/::REPO_URL::/g, ghRepoUrl || '');
 
   copyTextToClipboard(tBody);
