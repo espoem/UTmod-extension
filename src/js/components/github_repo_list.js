@@ -6,10 +6,12 @@ export class GHListItem {
     repoStarsCount,
     repoForksCount,
     repoLicense,
+    repoURL,
     username,
   }) {
     this.node = document.createElement('li');
     this.node.classList.add('gh-list__item');
+    this.node.setAttribute('data-repo-url', repoURL);
 
     // repo owner image
     const avatarDiv = document.createElement('div');
