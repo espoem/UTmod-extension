@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "UTmod - Utopian reviews made easier",
-  "version": "0.3.0",
+  "version": "0.4.0",
 
   "description": "Extension to collect tools for Utopian reviewers to one place.",
   "browser_action": {
