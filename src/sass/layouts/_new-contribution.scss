@@ -23,6 +23,7 @@
   width: 100%;
   height: 30px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  position: relative;
   & input {
     width: 100%;
     height: 100%;
@@ -30,6 +31,13 @@
     border: none;
     padding: 0 1.2rem;
     color: $color-primary-dark-2;
+  }
+  &--valid {
+    box-shadow: 2px 2px 5px $color-success;
+  }
+
+  &--error {
+    box-shadow: 2px 2px 5px $color-error;
   }
 }
 

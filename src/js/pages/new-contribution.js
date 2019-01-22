@@ -31,19 +31,28 @@ function searchGitHubRepoOnInput() {
 }
 
 function validateGitHubUserOnInput() {
-  const input = document.querySelector('#github-user input');
-  return new Promise((res) => {
-    let to;
-    input
-      && input.addEventListener('input', (e) => {
-        to && window.clearTimeout(to);
-        let resp;
-        to = window.setTimeout(async () => {
-          resp = await userExists(e.target.value);
-          res(resp);
-        }, 1000);
-      });
-  });
+  const inputDiv = document.querySelector('#github-user');
+  let to;
+  inputDiv
+    && inputDiv.addEventListener('input', (e) => {
+      to && window.clearTimeout(to);
+      if (!(e.target && e.target.value.length > 0)) {
+        inputDiv.classList.remove('ut-input--valid');
+        inputDiv.classList.remove('ut-input--error');
+        return;
+      }
+      let resp;
+      to = window.setTimeout(async () => {
+        resp = await userExists(e.target.value);
+        if (resp) {
+          inputDiv.classList.remove('ut-input--error');
+          inputDiv.classList.add('ut-input--valid');
+        } else {
+          inputDiv.classList.remove('ut-input--valid');
+          inputDiv.classList.add('ut-input--error');
+        }
+      }, 500);
+    });
 }
 
 function selectListItem(listNode) {
@@ -61,16 +70,26 @@ function selectListItem(listNode) {
 function updateGHListOnInput() {
   console.log('updateGHListOnInput');
   const repoList = document.querySelector('.gh-list');
-  const input = document.querySelector('#github-search input');
+  const inputDiv = document.querySelector('#github-search');
+  const input = inputDiv.querySelector('input');
   let to;
   input
-    && input.addEventListener('input', async () => {
+    && input.addEventListener('input', async (e) => {
       to && window.clearTimeout(to);
+      if (!(e.target && e.target.value.length > 0)) {
+        inputDiv.classList.remove('ut-input--valid');
+        inputDiv.classList.remove('ut-input--error');
+        return;
+      }
       to = window.setTimeout(async () => {
         const repos = await searchRepositories(input.value);
         console.log(repos);
-        if (!repos || repos.length < 0) {
-          return;
+        if (!repos || repos.length < 1) {
+          inputDiv.classList.remove('ut-input--valid');
+          inputDiv.classList.add('ut-input--error');
+        } else {
+          inputDiv.classList.remove('ut-input--error');
+          inputDiv.classList.add('ut-input--valid');
         }
         removeChildrenNodes(repoList);
         for (let i = 0, l = Math.min(repos.length, 25); i < l; ++i) {
