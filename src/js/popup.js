@@ -2,16 +2,19 @@ import '../sass/main.scss';
 import { setupQuestionnairePage, setQuestionnairePageNavText } from './pages/questionnaire';
 import { setupNewContributionPage, setNewContributionPageNavText } from './pages/new-contribution';
 import { removeChildrenNodes } from './utils';
+import { searchRepositories, getUserRepositories } from './github';
 
 const pagesIds = {
   QUESTIONNAIRE: 'ut-questionnaire',
   NEW_CONTRIBUTION: 'ut-new-contribution',
 };
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', async () => {
   setupQuestionnairePage();
   setupNewContributionPage();
 
+  const tabs = document.querySelectorAll('.ut-tabs > *');
+  switchToPage(0, tabs);
   setupPageSwitching();
 });
 

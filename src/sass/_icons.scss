@@ -1,0 +1,18 @@
+@font-face {
+  font-family: 'icomoon';
+  src: url('../fonts/icomoon.eot#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf') format('truetype'),
+    url('../fonts/icomoon.woff') format('woff'),
+    url('../fonts/icomoon.svg#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+$icon-check-circle: '\e86c';
+$icon-star: '\e838';
+$icon-import-contacts: '\e0e0';
+$icon-search: '\e8b6';
+$icon-today: '\e8df';
+$icon-update: '\e923';
+$icon-call-split: '\e0b6';
+$icon-import-export: '\e0c3';

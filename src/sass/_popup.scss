@@ -3,6 +3,20 @@ body {
   height: 60rem;
 }
 
+a {
+  text-decoration: none;
+  &:hover,
+  &:active,
+  &:focus,
+  &:visited {
+    color: currentColor;
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 .ut-container {
   width: 100%;
   height: 100%;
@@ -56,7 +70,7 @@ textarea {
   &.range__comment {
     resize: none;
     height: 10rem;
-    border-left: 1px dashed $color-primary-dark-1;
+    border-left: $border-dashed-sm;
     padding: 0.5rem;
     margin-top: 1.2rem;
   }
