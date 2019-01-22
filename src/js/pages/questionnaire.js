@@ -64,7 +64,7 @@ function createScoreNode() {
 
   document.addEventListener('click', (e) => {
     if (e.target && e.target.id === 'score') {
-      copyScore(scoreSpan);
+      copyScore(e.target);
     }
   });
 
