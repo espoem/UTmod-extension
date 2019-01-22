@@ -73,6 +73,7 @@ module.exports = (env, argv) => {
           to: 'manifest.json',
         },
         { from: path.resolve(__dirname, 'src', 'img'), to: 'img' },
+        { from: path.resolve(__dirname, 'src', 'post_templates'), to: 'post_templates' },
       ]),
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, 'src', 'html', 'popup.html'),

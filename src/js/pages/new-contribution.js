@@ -1,5 +1,5 @@
 import { generateCategoriesOptions } from '../components/category_select';
-import { setNavLabelText, removeChildrenNodes } from '../utils';
+import { setNavLabelText, removeChildrenNodes, copyTextToClipboard } from '../utils';
 import { searchRepositories, userExists } from '../github';
 import { GHListItem } from '../components/github_repo_list';
 
@@ -10,8 +10,18 @@ export async function setupNewContributionPage() {
   const repoList = document.querySelector('.gh-list');
   repoList && selectListItem(repoList);
 
+  setupCopyTemplate();
+
   validateGitHubUserOnInput();
   updateGHListOnInput();
+}
+
+function setupCopyTemplate() {
+  const copyBtn = document.querySelector('#copy-contribution-template');
+  copyBtn
+    && copyBtn.addEventListener('click', async () => {
+      await copyTemplateToClipboard();
+    });
 }
 
 function searchGitHubRepoOnInput() {
@@ -99,6 +109,7 @@ function updateGHListOnInput() {
             pushed_at: repoLastUpdate,
             stargazers_count: repoStarsCount,
             forks_count: repoForksCount,
+            html_url: repoURL,
           } = repos[i];
           const repoLicense = (repos[i].license && repos[i].license.spdx_id) || 'NONE';
           const li = new GHListItem({
@@ -109,11 +120,37 @@ function updateGHListOnInput() {
             repoStarsCount,
             repoForksCount,
             repoLicense,
+            repoURL,
           });
           repoList.appendChild(li.render());
         }
       }, 500);
     });
+}
+
+async function copyTemplateToClipboard() {
+  const categorySelect = document.querySelector('#ut-new-contribution .ut-category__select');
+  if (!categorySelect) {
+    console.log("Can't copy template. No category select node.");
+    return;
+  }
+
+  const ghUserNode = document.querySelector('#github-user.ut-input--valid input');
+  const ghRepoNode = document.querySelector('#ut-new-contribution .gh-list__item--selected');
+
+  const templateFile = chrome.runtime.getURL(
+    `post_templates/${categorySelect.options[categorySelect.selectedIndex].value}.md`,
+  );
+
+  const tResp = await fetch(templateFile);
+  let tBody = await tResp.text();
+  const ghUserUrl = ghUserNode && `https://github.com/${ghUserNode.value}`;
+  const ghRepoUrl = ghRepoNode && ghRepoNode.getAttribute('data-repo-url');
+  console.log(ghRepoUrl)
+  tBody = tBody.replace(/::GH_PROFILE::/, ghUserUrl || '');
+  tBody = tBody.replace(/::REPO_URL::/g, ghRepoUrl || '');
+
+  copyTextToClipboard(tBody);
 }
 
 export function setNewContributionPageNavText() {
