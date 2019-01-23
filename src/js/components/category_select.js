@@ -1,10 +1,8 @@
 import { categories } from '../constants';
 
-export function generateCategoriesOptions(parentNode) {
-  for (const category of categories) {
-    const c = document.createElement('option');
-    c.value = category.slug;
-    c.innerText = category.name;
-    parentNode.appendChild(c);
-  }
-}
+export const generateCategoriesOptions = parent => categories.forEach((category) => {
+  const o = document.createElement('option');
+  o.value = category.slug;
+  o.innerText = category.name;
+  parent.appendChild(o);
+});
