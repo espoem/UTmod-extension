@@ -3,7 +3,7 @@ import { setNavLabelText, removeChildrenNodes, copyTextToClipboard } from '../ut
 import { searchRepositories, userExists } from '../github';
 import { GHListItem } from '../components/github_repo_list';
 
-export async function setupNewContributionPage() {
+export const setupNewContributionPage = () => {
   const catSelect = document.querySelector('#ut-new-contribution .ut-category__select');
   generateCategoriesOptions(catSelect);
 
@@ -14,37 +14,21 @@ export async function setupNewContributionPage() {
 
   validateGitHubUserOnInput();
   updateGHListOnInput();
-}
+};
 
-function setupCopyTemplate() {
+const setupCopyTemplate = () => {
   const copyBtn = document.querySelector('#copy-contribution-template');
-  copyBtn
-    && copyBtn.addEventListener('click', async () => {
+  copyBtn &&
+    copyBtn.addEventListener('click', async () => {
       await copyTemplateToClipboard();
     });
-}
+};
 
-function searchGitHubRepoOnInput() {
-  const input = document.querySelector('#github-search input');
-  return new Promise((res) => {
-    let to;
-    input
-      && input.addEventListener('input', (e) => {
-        to && window.clearTimeout(to);
-        let resp;
-        to = window.setTimeout(async () => {
-          resp = await searchRepositories(e.target.value);
-          res(resp);
-        }, 1000);
-      });
-  });
-}
-
-function validateGitHubUserOnInput() {
+const validateGitHubUserOnInput = () => {
   const inputDiv = document.querySelector('#github-user');
   let to;
-  inputDiv
-    && inputDiv.addEventListener('input', (e) => {
+  inputDiv &&
+    inputDiv.addEventListener('input', e => {
       to && window.clearTimeout(to);
       if (!(e.target && e.target.value.length > 0)) {
         inputDiv.classList.remove('ut-input--valid');
@@ -61,12 +45,12 @@ function validateGitHubUserOnInput() {
           inputDiv.classList.remove('ut-input--valid');
           inputDiv.classList.add('ut-input--error');
         }
-      }, 500);
+      }, 400);
     });
-}
+};
 
-function selectListItem(listNode) {
-  listNode.addEventListener('click', (e) => {
+const selectListItem = listNode =>
+  listNode.addEventListener('click', e => {
     const t = e.target;
     let closest;
     if (t && (closest = t.closest('.gh-list__item'))) {
@@ -75,25 +59,23 @@ function selectListItem(listNode) {
       closest.classList.add('gh-list__item--selected');
     }
   });
-}
 
-function updateGHListOnInput() {
-  console.log('updateGHListOnInput');
+const updateGHListOnInput = () => {
   const repoList = document.querySelector('.gh-list');
   const inputDiv = document.querySelector('#github-search');
   const input = inputDiv.querySelector('input');
   let to;
-  input
-    && input.addEventListener('input', async (e) => {
-      to && window.clearTimeout(to);
+  input &&
+    input.addEventListener('input', async e => {
       if (!(e.target && e.target.value.length > 0)) {
         inputDiv.classList.remove('ut-input--valid');
         inputDiv.classList.remove('ut-input--error');
-        return;
       }
+      to && window.clearTimeout(to);
       to = window.setTimeout(async () => {
         const repos = await searchRepositories(input.value);
         console.log(repos);
+
         if (!repos || repos.length < 1) {
           inputDiv.classList.remove('ut-input--valid');
           inputDiv.classList.add('ut-input--error');
@@ -101,34 +83,39 @@ function updateGHListOnInput() {
           inputDiv.classList.remove('ut-input--error');
           inputDiv.classList.add('ut-input--valid');
         }
+
         removeChildrenNodes(repoList);
         for (let i = 0, l = Math.min(repos.length, 25); i < l; ++i) {
-          const {
-            owner: { avatar_url: avatarURL, login: username },
-            full_name: repoFullName,
-            pushed_at: repoLastUpdate,
-            stargazers_count: repoStarsCount,
-            forks_count: repoForksCount,
-            html_url: repoURL,
-          } = repos[i];
-          const repoLicense = (repos[i].license && repos[i].license.spdx_id) || 'NONE';
-          const li = new GHListItem({
-            avatarURL,
-            username,
-            repoFullName,
-            repoLastUpdate: (repoLastUpdate && repoLastUpdate.split('T')[0]) || 'Uknown',
-            repoStarsCount,
-            repoForksCount,
-            repoLicense,
-            repoURL,
-          });
-          repoList.appendChild(li.render());
+          repoList.appendChild(createRepoListItem(repos[i]));
         }
-      }, 500);
+      }, 400);
     });
-}
+};
 
-async function copyTemplateToClipboard() {
+const createRepoListItem = repoJson => {
+  const {
+    owner: { avatar_url: avatarURL, login: username },
+    full_name: repoFullName,
+    pushed_at: repoLastUpdate,
+    stargazers_count: repoStarsCount,
+    forks_count: repoForksCount,
+    html_url: repoURL,
+  } = repoJson;
+  const repoLicense = (repoJson.license && repoJson.license.spdx_id) || 'NONE';
+  const li = new GHListItem({
+    avatarURL,
+    username,
+    repoFullName,
+    repoLastUpdate: (repoLastUpdate && repoLastUpdate.split('T')[0]) || 'Unknown',
+    repoStarsCount,
+    repoForksCount,
+    repoLicense,
+    repoURL,
+  });
+  return li;
+};
+
+const copyTemplateToClipboard = async () => {
   const categorySelect = document.querySelector('#ut-new-contribution .ut-category__select');
   if (!categorySelect) {
     console.log("Can't copy template. No category select node.");
@@ -146,13 +133,10 @@ async function copyTemplateToClipboard() {
   let tBody = await tResp.text();
   const ghUserUrl = ghUserNode && `https://github.com/${ghUserNode.value}`;
   const ghRepoUrl = ghRepoNode && ghRepoNode.getAttribute('data-repo-url');
-  console.log(ghRepoUrl)
   tBody = tBody.replace(/::GH_PROFILE::/g, ghUserUrl || '');
   tBody = tBody.replace(/::REPO_URL::/g, ghRepoUrl || '');
 
   copyTextToClipboard(tBody);
-}
+};
 
-export function setNewContributionPageNavText() {
-  setNavLabelText('Templates');
-}
+export const setNewContributionPageNavText = () => setNavLabelText('Templates');

@@ -2,7 +2,6 @@ import '../sass/main.scss';
 import { setupQuestionnairePage, setQuestionnairePageNavText } from './pages/questionnaire';
 import { setupNewContributionPage, setNewContributionPageNavText } from './pages/new-contribution';
 import { removeChildrenNodes } from './utils';
-import { searchRepositories, getUserRepositories } from './github';
 
 const pagesIds = {
   QUESTIONNAIRE: 'ut-questionnaire',
@@ -14,24 +13,24 @@ window.addEventListener('DOMContentLoaded', async () => {
   setupNewContributionPage();
 
   const tabs = document.querySelectorAll('.ut-tabs > *');
-  switchToPage(0, tabs);
-  setupPageSwitching();
+  showPage(0, tabs);
+  setupPagesDisplay();
 });
 
-function setupPageSwitching() {
+const setupPagesDisplay = () => {
   const tabs = document.querySelectorAll('.ut-tabs > *');
   for (let i = 0, len = tabs.length; i < len; ++i) {
     tabs[i].addEventListener('click', () => {
-      switchToPage(i, tabs);
+      showPage(i, tabs);
     });
   }
-}
+};
 
-function switchToPage(tabIndex, tabs) {
+const showPage = (tabIndex, tabs) => {
   if (!tabs) {
     return;
   }
-  emptyNavbar();
+  clearNavbar();
   let id;
   for (let i = 0, len = tabs.length; i < len; ++i) {
     if (tabs[i].classList.contains('ut-tabs--active')) {
@@ -59,9 +58,9 @@ function switchToPage(tabIndex, tabs) {
       }
     }
   }
-}
+};
 
-function emptyNavbar() {
+const clearNavbar = () => {
   const nav = document.querySelector('.ut-nav');
   if (!nav) {
     return;
@@ -70,4 +69,4 @@ function emptyNavbar() {
   for (let i = 0, len = children.length; i < len; ++i) {
     removeChildrenNodes(children[i]);
   }
-}
+};

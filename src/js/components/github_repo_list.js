@@ -9,18 +9,33 @@ export class GHListItem {
     repoURL,
     username,
   }) {
-    this.node = document.createElement('li');
-    this.node.classList.add('gh-list__item');
-    this.node.setAttribute('data-repo-url', repoURL);
+    const li = document.createElement('li');
+    li.classList.add('gh-list__item');
+    li.setAttribute('data-repo-url', repoURL);
 
-    // repo owner image
-    const avatarDiv = document.createElement('div');
-    avatarDiv.classList.add('gh-avatar');
-    const avatarImg = document.createElement('img');
-    avatarImg.setAttribute('src', avatarURL);
-    avatarDiv.appendChild(avatarImg);
+    const avatarDiv = this.createAvatarDiv(avatarURL);
+    const repoDiv = this.createRepoDiv(
+      username,
+      repoFullName,
+      repoLastUpdate,
+      repoStarsCount,
+      repoForksCount,
+      repoLicense,
+    );
 
-    // repo info
+    li.appendChild(avatarDiv);
+    li.appendChild(repoDiv);
+    return li;
+  }
+
+  createRepoDiv(
+    username,
+    repoFullName,
+    repoLastUpdate,
+    repoStarsCount,
+    repoForksCount,
+    repoLicense,
+  ) {
     const repoDiv = document.createElement('div');
     repoDiv.classList.add('gh-repo');
     repoDiv.setAttribute('data-username', username);
@@ -47,23 +62,15 @@ export class GHListItem {
     repoInfoDiv.appendChild(repoForksDiv);
     repoDiv.appendChild(repoFullnameDiv);
     repoDiv.appendChild(repoInfoDiv);
-
-    this.node.appendChild(avatarDiv);
-    this.node.appendChild(repoDiv);
+    return repoDiv;
   }
 
-  render() {
-    return this.node;
-  }
-}
-
-export class GHList {
-  constructor() {
-    this.node = document.createElement('ul');
-    this.node.classList.add('gh-list');
-  }
-
-  render() {
-    return this.node;
+  createAvatarDiv(avatarURL) {
+    const avatarDiv = document.createElement('div');
+    avatarDiv.classList.add('gh-avatar');
+    const avatarImg = document.createElement('img');
+    avatarImg.setAttribute('src', avatarURL);
+    avatarDiv.appendChild(avatarImg);
+    return avatarDiv;
   }
 }
